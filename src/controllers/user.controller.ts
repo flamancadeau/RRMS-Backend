@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import * as userService from "../services/ user.service";
+import * as userService from "../services/user.service";
 
 export const createUser = async (
   req: Request,
@@ -13,7 +13,6 @@ export const createUser = async (
     data: user,
   });
 };
-
 
 export const getUsers = async (req: Request, res: Response) => {
   const users = await userService.getUsers();
@@ -35,6 +34,19 @@ export const getUser = async (req: Request, res: Response) => {
   });
 };
 
+export const updateUser = async (req: Request, res: Response) => {
+  const user = await userService.updateUser(
+    req.params.id,
+    req.body
+  );
+
+  return res.status(200).json({
+    success: true,
+    message: "User updated successfully",
+    data: user,
+  });
+};
+
 export const deleteUser = async (req: Request, res: Response) => {
   await userService.deleteUser(req.params.id);
 
@@ -44,16 +56,12 @@ export const deleteUser = async (req: Request, res: Response) => {
   });
 };
 
-
-export const updateUser = async (req: Request, res: Response) => {
-  const user = await userService.updateUser(
-    req.params.id,
-    req.body,
-  );
+export const restoreUser = async (req: Request, res: Response) => {
+  const user = await userService.restoreUser(req.params.id);
 
   return res.status(200).json({
     success: true,
-    message: "User updated successfully",
+    message: "User restored successfully",
     data: user,
   });
 };
